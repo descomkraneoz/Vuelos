@@ -5,15 +5,13 @@
  */
 package net.severo.vuelos.dao;
 
-import java.util.Date;
-import java.util.List;
 import net.severo.vuelos.estructura.OrdenPago;
 import net.severo.vuelos.estructura.Reserva;
 
-/**
- *
- * @author Usuario
- */
+import java.util.Date;
+import java.util.List;
+
+
 public interface IReservaDAO {
     void crearReserva(Reserva r)throws DAOException ;
     void crearOrdenPago(OrdenPago orden) throws DAOException ;

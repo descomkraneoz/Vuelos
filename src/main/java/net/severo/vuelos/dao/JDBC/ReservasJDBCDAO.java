@@ -122,14 +122,6 @@ public class ReservasJDBCDAO implements IReservaDAO {
 
     }
 
-    /**
-     * idReserva,--->int
-     * fecha,---->date
-     * importe,----->double
-     * vuelo,----> object
-     * cancelada---->boolean
-     */
-
     @Override
     public void modificarReserva(Reserva r) throws DAOException {
 
@@ -404,6 +396,56 @@ public class ReservasJDBCDAO implements IReservaDAO {
 
     @Override
     public List<Reserva> obtenerTodasReservas(String idVuelo) throws DAOException {
-        return null;
+        //Obtiene de la BD el vuelo con codigo pasado por parametro
+        Vuelo j = new Vuelo();
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = ConexionJDBC.getInstance().getConnection();
+
+            ps = conn.prepareStatement(getVuelos);
+            ps.setString(1, idVuelo);
+
+            ResultSet rs = ps.executeQuery(); //el string se transforma en una sentencia de la bd, un query, se guarda en rs
+            if (!rs.next()) {
+                // Nos metemos aquí si la consulta no devuelve nada
+                return null;
+            }
+
+            String codVuelo = rs.getString("codVuelo"); //es string codvuelo
+            String origen = rs.getString("origen");
+            String destino = rs.getString("destino");
+            double precio = rs.getDouble("precio");
+            java.util.Date fecha = new java.util.Date(rs.getDate("fecha").getTime());
+            int plazas = rs.getInt("plazas");
+            int terminal = rs.getInt("terminal");
+            int puerta = rs.getInt("puerta");
+
+
+            j.setCodigo(codVuelo);
+            j.setOrigen(origen);
+            j.setDestino(destino);
+            j.setPrecioPersona(precio);
+            j.setFechaVuelo(fecha);
+            j.setPlazasDisponibles(plazas);
+            j.setTerminal(terminal);
+            j.setPuerta(puerta);
+
+
+            return j; //devuelve el primer vuelo
+
+
+        } catch (Exception e) {
+            throw new DAOException("Ha habido un problema al obtener el vuelo: ", e);
+        } finally {
+            try {
+                ps.close();
+
+            } catch (SQLException ex) {
+                throw new DAOException("Error al cerrar la base de datos", ex);
+            }
+
+        }
     }
 }
