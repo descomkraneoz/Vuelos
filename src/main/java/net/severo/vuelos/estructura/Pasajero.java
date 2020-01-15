@@ -7,10 +7,7 @@ package net.severo.vuelos.estructura;
 
 import java.util.Date;
 
-/**
- *
- * @author
- */
+
 public abstract class Pasajero {
     protected int id;
     protected String dni;

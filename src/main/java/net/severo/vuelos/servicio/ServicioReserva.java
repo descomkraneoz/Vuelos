@@ -5,25 +5,18 @@
  */
 package net.severo.vuelos.servicio;
 
+import net.severo.vuelos.dao.DAOException;
+import net.severo.vuelos.dao.IReservaDAO;
+import net.severo.vuelos.dao.JDBC.ReservasJDBCDAO;
+import net.severo.vuelos.dao.Raf.ReservasRafDAO;
+import net.severo.vuelos.dao.txt.ReservasTxtDAO;
+import net.severo.vuelos.estructura.*;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import net.severo.vuelos.dao.DAOException;
-import net.severo.vuelos.dao.IReservaDAO;
-import net.severo.vuelos.dao.Raf.ReservasRafDAO;
-import net.severo.vuelos.dao.txt.ReservasTxtDAO;
-import net.severo.vuelos.estructura.Adulto;
-import net.severo.vuelos.estructura.Ninyo;
-import net.severo.vuelos.estructura.OrdenPago;
-import net.severo.vuelos.estructura.Pasajero;
-import net.severo.vuelos.estructura.Reserva;
-import net.severo.vuelos.estructura.TarjetaEmbarque;
-import net.severo.vuelos.estructura.Vuelo;
 
-/**
- *
- * @author Usuario
- */
+
 public class ServicioReserva {
 
     private IReservaDAO dao = null;
@@ -48,7 +41,7 @@ public class ServicioReserva {
         }
         if (opcion == 3) {
 
-            //No implentado
+            dao = new ReservasJDBCDAO();
         }
         if (opcion == 4) {
 
@@ -253,8 +246,8 @@ public class ServicioReserva {
         }
     }
 
-    public ArrayList<Pasajero> obtenerTodosLosPasjeros() throws DAOException, ServiciosException {
-        List<Reserva> reservas=dao.obtenerTodasReservas();
+    public ArrayList<Pasajero> obtenerTodosLosPasajeros() throws DAOException, ServiciosException {
+        List<Reserva> reservas = dao.obtenerTodasReservas();
         ArrayList<Pasajero> totalPasajeros=new ArrayList<>();
         for(Reserva r:reservas){
             for(Pasajero p:r.getPasajeros()){
@@ -265,7 +258,7 @@ public class ServicioReserva {
     }
 
     public void pasajeroExiste(Pasajero pasajero) throws DAOException, ServiciosException {
-        if(this.obtenerTodosLosPasjeros().contains(pasajero)){
+        if (this.obtenerTodosLosPasajeros().contains(pasajero)) {
             throw new ServiciosException("Este pasajero ya existe");
         }
     }

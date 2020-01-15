@@ -2,9 +2,7 @@ package net.severo.vuelos.dao.JDBC;
 
 import net.severo.vuelos.dao.DAOException;
 import net.severo.vuelos.dao.IReservaDAO;
-import net.severo.vuelos.estructura.OrdenPago;
-import net.severo.vuelos.estructura.Reserva;
-import net.severo.vuelos.estructura.Vuelo;
+import net.severo.vuelos.estructura.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +19,8 @@ public class ReservasJDBCDAO implements IReservaDAO {
     static String insertReserva="INSERT INTO reservas(idReserva,fecha,importe,vuelo,cancelada) VALUES (?,?,?,?,?);";
     static String deleteReserva="DELETE FROM reservas WHERE idReserva=?;";
     static String modReserva="UPDATE FROM reservas WHERE idReserva=?;";
+
+    static String insertPasajero = "INSERT INTO pasajeros(idPasajero, dni, nombre, apellidos, fechaNacimiento, numMaletas, reserva, tipo, solo, silleta, descuento) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 
     static String getAllOrdenPago="SELECT * FROM orden_pago;";
     static String getOrdenPago="SELECT * FROM orden_pago WHERE idOrden=?;";
@@ -51,11 +51,36 @@ public class ReservasJDBCDAO implements IReservaDAO {
             conn = ConexionJDBC.getInstance().getConnection();
 
             ps = conn.prepareStatement(insertReserva);
+            ps = conn.prepareStatement(insertPasajero);
+            //reserva
             ps.setInt(1, r.getId());
             ps.setDate(2, new java.sql.Date(r.getFecha().getTime()));
             ps.setDouble(3,r.getImporte());
             ps.setObject(4,r.getVuelo());
             ps.setBoolean(5, r.isCancelada());
+            //pasajero
+            List<Pasajero> pasajeros = r.getPasajeros();
+            for (Pasajero p : pasajeros) {
+                ps.setInt(1, p.getId());
+                ps.setString(2, p.getDni());
+                ps.setString(3, p.getNombre());
+                ps.setString(4, p.getApellidos());
+                ps.setDate(5, new java.sql.Date(p.getFecha_nacimiento().getTime()));
+                ps.setInt(6, p.getNum_maletas_facturar());
+                ps.setInt(7, r.getId());
+                if (p instanceof Adulto) {
+                    ps.setObject(11, ((Adulto) p).getDescuento());
+                } else {
+
+                }
+                if (p instanceof Ninyo) {
+                    ps.setObject(9, ((Ninyo) p).getSolo());
+                    ps.setObject(10, ((Ninyo) p).getSilleta());
+                } else {
+
+                }
+            }
+            //tarjeta de embarque
 
             @SuppressWarnings("unused")
             int afectadas = ps.executeUpdate();
@@ -372,6 +397,11 @@ public class ReservasJDBCDAO implements IReservaDAO {
                 j.setImporte(importe);
                 j.setVuelo(v);
                 j.setCancelada(cancelada);
+
+
+                // TO DO Obtener los pasajeros de esa reserva con un metodo
+
+
 
                 reservas.add(j);
 

@@ -5,32 +5,18 @@
  */
 package net.severo.vuelos.dao.txt;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import net.severo.vuelos.dao.DAOException;
+import net.severo.vuelos.dao.IReservaDAO;
+import net.severo.vuelos.estructura.*;
+
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import net.severo.vuelos.dao.DAOException;
-import net.severo.vuelos.dao.IReservaDAO;
-import net.severo.vuelos.estructura.Adulto;
-import net.severo.vuelos.estructura.Configuracion;
-import net.severo.vuelos.estructura.Descuentos;
-import net.severo.vuelos.estructura.Ninyo;
-import net.severo.vuelos.estructura.OrdenPago;
-import net.severo.vuelos.estructura.Pasajero;
-import net.severo.vuelos.estructura.Reserva;
-import net.severo.vuelos.estructura.TarjetaEmbarque;
-import net.severo.vuelos.estructura.Vuelo;
 
-/**
- *
- * @author Rubén Más Almira
- */
+
 public class ReservasTxtDAO implements IReservaDAO {
 
     private String archivoReservas = null;

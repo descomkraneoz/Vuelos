@@ -5,9 +5,6 @@
  */
 package net.severo.vuelos.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import net.severo.vuelos.dao.DAOException;
 import net.severo.vuelos.estructura.OrdenPago;
 import net.severo.vuelos.estructura.Pasajero;
@@ -19,6 +16,10 @@ import net.severo.vuelos.servicio.ServiciosException;
 import net.severo.vuelos.views.VistaPasajero;
 import net.severo.vuelos.views.VistaReservas;
 import net.severo.vuelos.views.VistaVuelo;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -92,7 +93,7 @@ public class ControladorReserva {
         //Pasajeros del vuelo
         ArrayList<Pasajero> pasajerosAlCompleto = new ArrayList<>();
         try {
-            pasajerosAlCompleto = ServicioReserva.getServicio().obtenerTodosLosPasjeros();
+            pasajerosAlCompleto = ServicioReserva.getServicio().obtenerTodosLosPasajeros();
         } catch (DAOException ex) {
             vr.mostrarError("Error al intentar obtener los datos: " + ex.getMessage());
             return;

@@ -5,10 +5,7 @@
  */
 package net.severo.vuelos.estructura;
 
-/**
- *
- * @author Rubén Más
- */
+
 public enum Descuentos {
     NINGUNO,
     RESIDENTE_ISLA,
