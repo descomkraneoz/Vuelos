@@ -17,6 +17,7 @@ import java.util.List;
 public class ReservasJDBCDAO implements IReservaDAO {
     static String getAllReservas="SELECT * FROM reservas;";
     static String getReserva="SELECT * FROM reservas WHERE idReserva=?;";
+    static String getReservaVuelo = "SELECT * FROM reservas WHERE vuelo=?;";
     static String insertReserva="INSERT INTO reservas(idReserva,fecha,importe,vuelo,cancelada) VALUES (?,?,?,?,?);";
     static String deleteReserva="DELETE FROM reservas WHERE idReserva=?;";
     static String modReserva="UPDATE FROM reservas WHERE idReserva=?;";
@@ -397,14 +398,16 @@ public class ReservasJDBCDAO implements IReservaDAO {
     @Override
     public List<Reserva> obtenerTodasReservas(String idVuelo) throws DAOException {
         //Obtiene de la BD el vuelo con codigo pasado por parametro
-        Vuelo j = new Vuelo();
+        Reserva j = new Reserva();
+        List<Reserva> reservas = new ArrayList<Reserva>();
         Connection conn = null;
         PreparedStatement ps = null;
+        VuelosJDBCDAO vueloDAO = new VuelosJDBCDAO();
 
         try {
             conn = ConexionJDBC.getInstance().getConnection();
 
-            ps = conn.prepareStatement(getVuelos);
+            ps = conn.prepareStatement(getReservaVuelo);
             ps.setString(1, idVuelo);
 
             ResultSet rs = ps.executeQuery(); //el string se transforma en una sentencia de la bd, un query, se guarda en rs
@@ -413,27 +416,23 @@ public class ReservasJDBCDAO implements IReservaDAO {
                 return null;
             }
 
-            String codVuelo = rs.getString("codVuelo"); //es string codvuelo
-            String origen = rs.getString("origen");
-            String destino = rs.getString("destino");
-            double precio = rs.getDouble("precio");
+            int idReserva = rs.getInt("idReserva");
             java.util.Date fecha = new java.util.Date(rs.getDate("fecha").getTime());
-            int plazas = rs.getInt("plazas");
-            int terminal = rs.getInt("terminal");
-            int puerta = rs.getInt("puerta");
+            double importe = rs.getDouble("importe");
+            Vuelo v = vueloDAO.obtenerVuelo(rs.getString("vuelo"));
+            boolean cancelada = rs.getBoolean("cancelada");
 
 
-            j.setCodigo(codVuelo);
-            j.setOrigen(origen);
-            j.setDestino(destino);
-            j.setPrecioPersona(precio);
-            j.setFechaVuelo(fecha);
-            j.setPlazasDisponibles(plazas);
-            j.setTerminal(terminal);
-            j.setPuerta(puerta);
+            j.setId(idReserva);
+            j.setFecha(fecha);
+            j.setImporte(importe);
+            j.setVuelo(v);
+            j.setCancelada(cancelada);
+
+            reservas.add(j);
 
 
-            return j; //devuelve el primer vuelo
+            return reservas; //devuelve el primer vuelo
 
 
         } catch (Exception e) {
