@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author Ruben Más
+ * @author
  */
 public class TarjetaEmbarque {
    private int id;

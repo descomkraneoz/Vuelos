@@ -6,10 +6,7 @@
 package net.severo.vuelos.estructura;
 import java.util.Date;
 
-/**
- *
- * @author Rubén Más
- */
+
 public class Adulto extends Pasajero{
     private Descuentos descuento;
 

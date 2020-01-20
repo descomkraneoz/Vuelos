@@ -5,13 +5,9 @@
  */
 package net.severo.vuelos.estructura;
 
-import java.time.LocalDate;
 import java.util.Date;
 
-/**
- *
- * @author Rubén Más
- */
+
 public class Ninyo extends Pasajero {
     private boolean solo;
     private boolean silleta;

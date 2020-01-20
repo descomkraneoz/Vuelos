@@ -5,7 +5,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Rubén Más
+ * @author
  */
 public class Vuelo implements Comparable<Vuelo>{
     private String codigo;

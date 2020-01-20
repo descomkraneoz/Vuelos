@@ -8,13 +8,17 @@ package net.severo.vuelos.estructura;
 import java.util.Date;
 
 
-public abstract class Pasajero {
+public class Pasajero {
     protected int id;
     protected String dni;
     protected String nombre;
     protected String apellidos;
     protected Date fechaNacimiento;
     protected int numMaletasFacturar;
+    protected String tipo;
+    protected boolean solo;
+    protected boolean silleta;
+    protected String descuento;
     protected TarjetaEmbarque tarjeta;
 
     Pasajero(int id, String dni, String nombre, String apellidos, Date fecha_nacimiento, int num_maletas_facturar) {
@@ -27,7 +31,42 @@ public abstract class Pasajero {
         this.tarjeta=null;
     }
 
-    
+    public Pasajero() {
+
+    }
+
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public boolean isSolo() {
+        return solo;
+    }
+
+    public void setSolo(boolean solo) {
+        this.solo = solo;
+    }
+
+    public boolean isSilleta() {
+        return silleta;
+    }
+
+    public void setSilleta(boolean silleta) {
+        this.silleta = silleta;
+    }
+
+    public String getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(String descuento) {
+        this.descuento = descuento;
+    }
 
     public int getId() {
         return id;

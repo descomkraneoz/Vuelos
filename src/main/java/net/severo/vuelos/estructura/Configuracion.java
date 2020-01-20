@@ -4,10 +4,7 @@ package net.severo.vuelos.estructura;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- *
- * @author Rubén Más Almira
- */
+
 public class Configuracion{
     public static Properties propiedades=new Properties();
     

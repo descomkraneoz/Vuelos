@@ -27,6 +27,8 @@ public class ReservasJDBCDAO implements IReservaDAO {
     static String getOrdenPago="SELECT * FROM orden_pago WHERE idOrden=?;";
     static String insertOrdenPago="INSERT INTO orden_pago(idOrden,fecha,dni,numTarjeta,importe,reserva) VALUES (?,?,?,?,?,?);";
 
+    static String insertTarjeta = "INSERT INTO tarjetas(idTarjeta, vuelo, origen, destino, fecha, terminal, puerta) VALUES (?,?,?,?,?,?,?);";
+
     public ReservasJDBCDAO() throws DAOException {
 
         //acedemos al singleton ahora por si hay fallos que salten aqui
@@ -47,43 +49,72 @@ public class ReservasJDBCDAO implements IReservaDAO {
     public void crearReserva(Reserva r) throws DAOException {
         Connection conn = null;
         PreparedStatement ps = null;
-        List<Pasajero> pasajeros;
+        ArrayList<Pasajero> pasajeros;
 
         try {
             conn = ConexionJDBC.getInstance().getConnection();
-            pasajeros = new ArrayList<>();
-
             ps = conn.prepareStatement(insertReserva);
-            ps = conn.prepareStatement(insertPasajero);
+
             //reserva
             ps.setInt(1, r.getId());
             ps.setDate(2, new java.sql.Date(r.getFecha().getTime()));
             ps.setDouble(3,r.getImporte());
             ps.setObject(4,r.getVuelo());
             ps.setBoolean(5, r.isCancelada());
+
             //pasajero
-            pasajeros = r.getPasajeros();
+            pasajeros = new ArrayList<>();
+            pasajeros = (ArrayList<Pasajero>) r.getPasajeros();
             for (Pasajero p : pasajeros) {
-                ps.setInt(1, p.getId());
-                ps.setString(2, p.getDni());
-                ps.setString(3, p.getNombre());
-                ps.setString(4, p.getApellidos());
-                ps.setDate(5, new java.sql.Date(p.getFecha_nacimiento().getTime()));
-                ps.setInt(6, p.getNum_maletas_facturar());
+                ps = conn.prepareStatement(insertPasajero);
+                //id Reserva
                 ps.setInt(7, r.getId());
+                //id
+                ps.setInt(1, p.getId());
+                //dni
+                ps.setString(2, p.getDni());
+                //nombre
+                ps.setString(3, p.getNombre());
+                //apellidos
+                ps.setString(4, p.getApellidos());
+                //fecha
+                ps.setDate(5, new java.sql.Date(p.getFecha_nacimiento().getTime()));
+                //maletas
+                ps.setInt(6, p.getNum_maletas_facturar());
+
                 if (p instanceof Adulto) {
                     ps.setObject(11, ((Adulto) p).getDescuento());
                 } else {
 
                 }
+
                 if (p instanceof Ninyo) {
                     ps.setObject(9, ((Ninyo) p).getSolo());
                     ps.setObject(10, ((Ninyo) p).getSilleta());
                 } else {
 
                 }
+
+                //tarjeta de embarque
+                ps = conn.prepareStatement(insertTarjeta);
+                if (p.getTarjeta() != null) {
+                    TarjetaEmbarque tarjeta = p.getTarjeta();
+                    //id
+                    ps.setInt(1, tarjeta.getId());
+                    //vuelo
+                    ps.setString(2, tarjeta.getVuelo());
+                    //origen
+                    ps.setString(3, tarjeta.getOrigen());
+                    //destino
+                    ps.setString(4, tarjeta.getDestino());
+                    //fecha
+                    ps.setDate(5, new java.sql.Date(tarjeta.getFecha_vuelo().getTime()));
+                    //terminal
+                    ps.setInt(6, tarjeta.getTerminal());
+                    //puerta
+                    ps.setInt(7, tarjeta.getPuerta());
+                }
             }
-            //tarjeta de embarque
 
             @SuppressWarnings("unused")
             int afectadas = ps.executeUpdate();
@@ -105,54 +136,6 @@ public class ReservasJDBCDAO implements IReservaDAO {
 
     }
 
-    public List<Pasajero> obtenerPasajeros(int idReserva) throws DAOException {
-        //Obtiene de la BD la reserva con id
-        Reserva e = new Reserva();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        List<Pasajero> pasajeros = new ArrayList<>();
-
-        try {
-            conn = ConexionJDBC.getInstance().getConnection();
-
-            ps = conn.prepareStatement(getAllPasajero);
-            ps.setInt(1, idReserva); //porque es el primer interrogante o dato que necesito
-
-            ResultSet rs = ps.executeQuery();
-            if (!rs.next()) {
-                // Nos metemos aquí si la consulta no devuelve nada
-                return null;
-            }
-
-
-            int idReserva = rs.getInt("idReserva"); //campo de la base de datos
-            Date fecha = rs.getDate("fecha");
-            double importe = rs.getDouble("importe");
-            Vuelo vuelo = (Vuelo) rs.getObject("vuelo");
-            boolean cancelada = rs.getBoolean("cancelada");
-
-            e.setId(idReserva);
-            e.setFecha(fecha);
-            e.setImporte(importe);
-            e.setVuelo(vuelo);
-            e.setCancelada(cancelada);
-
-
-            return pasajeros;
-
-
-        } catch (Exception ex) {
-            throw new DAOException("Ha habido un problema al obtener la reserva: ", ex);
-        } finally {
-            try {
-                ps.close();
-
-            } catch (SQLException ex) {
-                throw new DAOException("Error al cerrar la base de datos", ex);
-            }
-
-        }
-    }
 
     /**
      * idOrden=int 4
@@ -269,6 +252,9 @@ public class ReservasJDBCDAO implements IReservaDAO {
             e.setImporte(importe);
             e.setVuelo(vuelo);
             e.setCancelada(cancelada);
+
+            // TO DO obtener pasajeros de la reserva
+            obtenerPasajeros(e);
 
 
             return e;
@@ -424,6 +410,7 @@ public class ReservasJDBCDAO implements IReservaDAO {
         //Obtiene de la BD la lista de todos las vuelos y devuelve dicha lista
         List<Reserva> reservas = new ArrayList<Reserva>();
 
+
         Connection conn = null;
         PreparedStatement ps = null;
         VuelosJDBCDAO vueloDAO=new VuelosJDBCDAO();
@@ -451,9 +438,8 @@ public class ReservasJDBCDAO implements IReservaDAO {
                 j.setVuelo(v);
                 j.setCancelada(cancelada);
 
-
                 // TO DO Obtener los pasajeros de esa reserva con un metodo
-
+                //obtenerTodosPasajeros(reservas);
 
 
                 reservas.add(j);
@@ -512,6 +498,11 @@ public class ReservasJDBCDAO implements IReservaDAO {
             j.setVuelo(v);
             j.setCancelada(cancelada);
 
+            // vrear y obtner la lista de pasajeros
+
+
+
+
             reservas.add(j);
 
 
@@ -529,5 +520,84 @@ public class ReservasJDBCDAO implements IReservaDAO {
             }
 
         }
+    }
+
+    private void obtenerPasajeros(Reserva e) {
+        e.getPasajeros();
+
+    }
+
+    /**
+     * idPasajero, dni, nombre, apellidos, fechaNacimiento,
+     * numMaletas, reserva, tipo, solo, silleta, descuento
+     */
+
+    private List<Pasajero> obtenerTodosPasajeros(Reserva reserva) throws DAOException {
+        //Obtiene de la BD el vuelo con codigo pasado por parametro
+        Pasajero p = new Pasajero();
+        List<Pasajero> pa = new ArrayList<Pasajero>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ReservasJDBCDAO reservaDAO = new ReservasJDBCDAO();
+
+        try {
+            conn = ConexionJDBC.getInstance().getConnection();
+
+            ps = conn.prepareStatement(getAllPasajero);
+            ps.setInt(1, reserva.getId());
+
+            ResultSet rs = ps.executeQuery(); //el string se transforma en una sentencia de la bd, un query, se guarda en rs
+            if (!rs.next()) {
+                // Nos metemos aquí si la consulta no devuelve nada
+                return null;
+            }
+
+            int idPasajero = rs.getInt("idPasajero");
+            String dni = rs.getString("dni");
+            String nombre = rs.getString("nombre");
+            String apellidos = rs.getString("apellidos");
+            java.util.Date fecha = new java.util.Date(rs.getDate("fechaNacimiento").getTime());
+            int numMaletas = rs.getInt("numMaletas");
+            Reserva r = reservaDAO.obtenerReserva(rs.getInt("reserva"));
+            String tipo = rs.getString("tipo");
+            boolean solo = rs.getBoolean("solo");
+            boolean silleta = rs.getBoolean("silleta");
+            String descuento = rs.getString("descuento");
+
+
+            p.setId(idPasajero);
+            p.setDni(dni);
+            p.setNombre(nombre);
+            p.setApellidos(apellidos);
+            p.setFecha_nacimiento(fecha);
+            p.setNum_maletas_facturar(numMaletas);
+            p.setTipo(tipo);
+            p.setSolo(solo);
+            p.setSilleta(silleta);
+            p.setDescuento(descuento);
+            p.setTarjeta(null);
+
+
+            // crear y obtner la lista de pasajeros
+
+            pa.add(p);
+
+
+            return pa;
+
+
+        } catch (Exception e) {
+            throw new DAOException("Ha habido un problema al obtener el vuelo: ", e);
+        } finally {
+            try {
+                ps.close();
+
+            } catch (SQLException ex) {
+                throw new DAOException("Error al cerrar la base de datos", ex);
+            }
+
+        }
+
+
     }
 }
