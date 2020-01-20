@@ -20,6 +20,7 @@ public class VistaPrincipal {
             System.out.println("1.Archivo de texto");
             System.out.println("2.Archivo Binario");
             System.out.println("3.Base de datos relacional usando JDBC");
+            System.out.println("4.Base de datos relacional usando Hibernate");
             /*System.out.println("3.Archivo XML usando DOM");
             System.out.println("4.Archivo XML usando SAX");
             System.out.println("5.Base de datos relacional usando JDBC");
@@ -33,7 +34,7 @@ public class VistaPrincipal {
                 opcion = Integer.parseInt(entrada);
             }
             //El número debe cambiar cuando vayas implementando más DAO
-            if (opcion > 3 || opcion < 0) {
+            if (opcion > 4 || opcion < 0) {
                 System.out.println("Opcion No valida");
                 opcion = -1;
 

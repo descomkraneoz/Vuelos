@@ -5,16 +5,18 @@
  */
 package net.severo.vuelos.servicio;
 
-import java.util.ArrayList;
-import java.util.Date;
 import net.severo.vuelos.dao.DAOException;
+import net.severo.vuelos.dao.Hibernate.VueloHibernate;
+import net.severo.vuelos.dao.IVuelosDAO;
 import net.severo.vuelos.dao.JDBC.VuelosJDBCDAO;
 import net.severo.vuelos.dao.Raf.VuelosRafDAO;
 import net.severo.vuelos.dao.txt.VueloTxtDAO;
-import java.util.List;
 import net.severo.vuelos.estructura.Reserva;
 import net.severo.vuelos.estructura.Vuelo;
-import net.severo.vuelos.dao.IVuelosDAO;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -48,7 +50,7 @@ public class ServicioVuelo {
         }
         if (opcion == 4) {
 
-            //No implentado
+            dao = new VueloHibernate();
         }
         if (opcion == 5) {
 

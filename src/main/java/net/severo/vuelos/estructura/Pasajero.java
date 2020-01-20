@@ -60,13 +60,6 @@ public class Pasajero {
         this.silleta = silleta;
     }
 
-    public String getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(String descuento) {
-        this.descuento = descuento;
-    }
 
     public int getId() {
         return id;

@@ -574,7 +574,7 @@ public class ReservasJDBCDAO implements IReservaDAO {
             p.setTipo(tipo);
             p.setSolo(solo);
             p.setSilleta(silleta);
-            p.setDescuento(descuento);
+            //p.setDescuento(descuento);
             p.setTarjeta(null);
 
 

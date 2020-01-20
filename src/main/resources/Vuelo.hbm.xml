@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-dic-2015 15:10:33 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="net.severo.vuelos.estructura.Vuelo" table="vuelo">
+        <id name="codigo" type="java.lang.String">
+            <column name="CODIGO"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="origen" type="java.lang.String">
+            <column name="ORIGEN"/>
+        </property>
+        <property name="destino" type="java.lang.String">
+            <column name="destino"/>
+        </property>
+        <property name="precioPersona" type="double">
+            <column name="PRECIO_PERSONA"/>
+        </property>
+        <property name="fechaVuelo" type="java.util.Date">
+            <column name="FECHA_VUELO"/>
+        </property>
+        <property name="plazasDisponibles" type="int">
+            <column name="PLAZAS_DISPONIBLES"/>
+        </property>
+        <property name="terminal" type="int">
+            <column name="TERMINAL"/>
+        </property>
+        <property name="puerta" type="int">
+            <column name="PUERTA"/>
+        </property>
+    </class>
+</hibernate-mapping>
