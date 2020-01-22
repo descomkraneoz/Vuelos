@@ -6,6 +6,7 @@
 package net.severo.vuelos.dao;
 
 import net.severo.vuelos.estructura.Vuelo;
+
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,12 @@ public interface IVuelosDAO {
     Vuelo obtenerVuelo(String codigo)  throws DAOException ;
     List<Vuelo> obtenerVuelos(Date fechaSalida)  throws DAOException ;
     List<Vuelo> obtenerVuelos()  throws DAOException ;
+
+    public void finalizar() throws DAOException; //cortar la conexion
+
+    public void iniciarTransaccion() throws DAOException;
+
+    public void finalizarTransaccion() throws DAOException;
     
     
     

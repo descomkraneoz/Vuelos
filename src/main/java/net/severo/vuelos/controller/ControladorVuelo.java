@@ -5,15 +5,16 @@
  */
 package net.severo.vuelos.controller;
 
-import java.util.Date;
-import net.severo.vuelos.estructura.Vuelo;
-import java.util.List;
 import net.severo.vuelos.dao.DAOException;
 import net.severo.vuelos.estructura.Reserva;
+import net.severo.vuelos.estructura.Vuelo;
 import net.severo.vuelos.servicio.ServicioReserva;
 import net.severo.vuelos.servicio.ServicioVuelo;
 import net.severo.vuelos.servicio.ServiciosException;
-import net.severo.vuelos.views.*;
+import net.severo.vuelos.views.VistaVuelo;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -172,8 +173,10 @@ public class ControladorVuelo {
             vv.mostrarVuelos(ServicioVuelo.getServicio().obtenerVuelos());
         } catch (DAOException ex) {
             vv.mostrarError("Error al intentar obtener los datos" + ex);
+            ex.printStackTrace();
         } catch (ServiciosException ex) {
             vv.mostrarError("Error al intentar mostrar los datos: " + ex);
+            ex.printStackTrace();
         }
     }
 

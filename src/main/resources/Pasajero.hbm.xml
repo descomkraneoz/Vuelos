@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-dic-2015 15:10:33 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="net.severo.vuelos.estructura.Pasajero" table="pasajero">
+        <id name="id" type="int">
+            <column name="ID_PASAJERO"/>
+            <generator class="assigned"/>
+        </id>
+        <discriminator column="tipo" type="java.lang.String">
+        </discriminator>
+        <property name="dni" type="java.lang.String">
+            <column name="DNI"/>
+        </property>
+        <property name="nombre" type="java.lang.String">
+            <column name="NOMBRE"/>
+        </property>
+        <property name="apellidos" type="java.lang.String">
+            <column name="APELLIDOS"/>
+        </property>
+        <property name="fechaNacimiento" type="java.util.Date">
+            <column name="FECHA_NACIMIENTO"/>
+        </property>
+        <property name="numMaletasFacturar" type="int">
+            <column name="NUM_MALETAS"/>
+        </property>
+
+        <subclass name="net.severo.vuelos.estructura.Ninyo" discriminator-value="N">
+            <property name="solo" type="java.lang.Boolean">
+                <column name="SOLO"/>
+            </property>
+            <property name="silleta" type="java.lang.Boolean">
+                <column name="SILLETA"/>
+            </property>
+        </subclass>
+
+        <subclass name="net.severo.vuelos.estructura.Adulto" discriminator-value="A">
+            <property name="descuento" type="java.lang.String">
+                <column name="DESCUENTO"/>
+            </property>
+        </subclass>
+
+    </class>
+
+</hibernate-mapping>
+
+

@@ -68,7 +68,11 @@ public class ServicioVuelo {
             throw new ServiciosException("El vuelo ya existe.");
         }
 
+        dao.iniciarTransaccion();
+
         dao.crearVuelo(v);
+
+        dao.finalizarTransaccion();
 
     }
 
@@ -180,5 +184,12 @@ public class ServicioVuelo {
             throw new ServiciosException("No hay vuelos vacios");
         }
         return vuelos;
+    }
+
+    public void finalizar() throws DAOException {
+        //cierra las conexiones  e BD en caso de que fuera necesario
+        //en el caso de archivos de texto o bianrios no es necesario hacer nada
+        //ya que los abrimos y cerramos en cada operacion
+        dao.finalizar();
     }
 }

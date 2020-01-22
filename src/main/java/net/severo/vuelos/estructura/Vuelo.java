@@ -14,8 +14,8 @@ public class Vuelo implements Comparable<Vuelo>{
     private double precioPersona;
     private Date fechaVuelo;
     private int plazasDisponibles;
-    private int terminal;
-    private int puerta;
+    private int terminal = 0;
+    private int puerta = 0;
     
     public Vuelo(){}
 

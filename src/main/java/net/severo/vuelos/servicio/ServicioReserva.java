@@ -247,6 +247,7 @@ public class ServicioReserva {
     }
 
     public ArrayList<Pasajero> obtenerTodosLosPasajeros() throws DAOException, ServiciosException {
+
         List<Reserva> reservas = dao.obtenerTodasReservas();
         ArrayList<Pasajero> totalPasajeros=new ArrayList<>();
         for(Reserva r:reservas){

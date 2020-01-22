@@ -5,16 +5,15 @@
  */
 package net.severo.vuelos.dao.Raf;
 
-import java.io.*;
-import java.nio.DoubleBuffer;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 import net.severo.vuelos.dao.DAOException;
 import net.severo.vuelos.dao.IVuelosDAO;
 import net.severo.vuelos.estructura.Configuracion;
 import net.severo.vuelos.estructura.Vuelo;
+
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author
@@ -269,6 +268,21 @@ return null;
             }
         }
         return vuelos;
+    }
+
+    @Override
+    public void finalizar() throws DAOException {
+
+    }
+
+    @Override
+    public void iniciarTransaccion() throws DAOException {
+
+    }
+
+    @Override
+    public void finalizarTransaccion() throws DAOException {
+
     }
 
     public Map<String,Integer> obteneMapaConPosiciones(){

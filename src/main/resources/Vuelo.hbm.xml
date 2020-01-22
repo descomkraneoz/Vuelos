@@ -12,7 +12,7 @@
             <column name="ORIGEN"/>
         </property>
         <property name="destino" type="java.lang.String">
-            <column name="destino"/>
+            <column name="DESTINO"/>
         </property>
         <property name="precioPersona" type="double">
             <column name="PRECIO_PERSONA"/>

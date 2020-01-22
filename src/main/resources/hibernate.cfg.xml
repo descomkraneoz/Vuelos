@@ -21,7 +21,7 @@
         <property name="current_session_context_class">thread</property>-->
 
         <mapping resource="Vuelo.hbm.xml"></mapping>
-        <mapping resource="Reserva.hbm.xml"></mapping>
+
 
     </session-factory>
 </hibernate-configuration>

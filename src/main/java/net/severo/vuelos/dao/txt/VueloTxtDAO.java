@@ -5,6 +5,11 @@
  */
 package net.severo.vuelos.dao.txt;
 
+import net.severo.vuelos.dao.DAOException;
+import net.severo.vuelos.dao.IVuelosDAO;
+import net.severo.vuelos.estructura.Configuracion;
+import net.severo.vuelos.estructura.Vuelo;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,10 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import net.severo.vuelos.dao.DAOException;
-import net.severo.vuelos.dao.IVuelosDAO;
-import net.severo.vuelos.estructura.Configuracion;
-import net.severo.vuelos.estructura.Vuelo;
 
 /**
  *
@@ -95,6 +96,21 @@ public class VueloTxtDAO implements IVuelosDAO {
     @Override
     public List<Vuelo> obtenerVuelos() throws DAOException{
         return this.sacarVuelosTxt();
+    }
+
+    @Override
+    public void finalizar() throws DAOException {
+
+    }
+
+    @Override
+    public void iniciarTransaccion() throws DAOException {
+
+    }
+
+    @Override
+    public void finalizarTransaccion() throws DAOException {
+
     }
 
     public void guardarVuelosTxt(List<Vuelo> vuelos) throws DAOException {
