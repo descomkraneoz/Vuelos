@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-dic-2015 15:10:33 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="net.severo.vuelos.estructura.OrdenPago" table="orden_pago">
+        <id name="id" type="int">
+            <column name="ID_TARJETA"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="vuelo" type="java.lang.String">
+            <column name="COD_VUELO"/>
+        </property>
+        <property name="fechaOrden" type="java.util.Date">
+            <column name="FECHA_ORDEN"/>
+        </property>
+        <property name="dniOrden" type="java.lang.String">
+            <column name="DNI_ORDEN"/>
+        </property>
+        <property name="destino" type="java.lang.String">
+            <column name="DESTINO"/>
+        </property>
+
+        <property name="terminal" type="int">
+            <column name="TERMINAL"/>
+        </property>
+        <property name="puerta" type="int">
+            <column name="PUERTA"/>
+        </property>
+
+    </class>
+</hibernate-mapping>
+
+        private int id;
+        private Date fechaOrden;
+        private String dniOrden;
+        private String numTarjeta;
+        private double importe;
+        private Reserva reserva;
+
