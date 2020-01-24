@@ -8,33 +8,25 @@
             <column name="ID_TARJETA"/>
             <generator class="assigned"/>
         </id>
-        <property name="vuelo" type="java.lang.String">
-            <column name="COD_VUELO"/>
-        </property>
         <property name="fechaOrden" type="java.util.Date">
             <column name="FECHA_ORDEN"/>
         </property>
         <property name="dniOrden" type="java.lang.String">
             <column name="DNI_ORDEN"/>
         </property>
-        <property name="destino" type="java.lang.String">
-            <column name="DESTINO"/>
+        <property name="numTarjeta" type="java.lang.String">
+            <column name="NUM_TARJETA"/>
         </property>
 
-        <property name="terminal" type="int">
+        <property name="importe" type="double">
             <column name="TERMINAL"/>
         </property>
-        <property name="puerta" type="int">
-            <column name="PUERTA"/>
-        </property>
+        <many-to-one name="reserva" class="net.severo.vuelos.estructura.Reserva" fetch="join">
+            <column name="RESERVA"/>
+        </many-to-one>
 
     </class>
 </hibernate-mapping>
 
-        private int id;
-        private Date fechaOrden;
-        private String dniOrden;
-        private String numTarjeta;
-        private double importe;
-        private Reserva reserva;
+
 
