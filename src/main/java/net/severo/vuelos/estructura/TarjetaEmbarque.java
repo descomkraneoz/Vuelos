@@ -41,7 +41,8 @@ public class TarjetaEmbarque {
     public String getDestino(){
         return destino;
     }
-    public Date getFecha_vuelo(){
+
+    public Date getFechaVuelo() {
         return fechaVuelo;
     }
     public int getTerminal(){
@@ -67,7 +68,7 @@ public class TarjetaEmbarque {
         this.destino = destino;
     }
 
-    public void setFecha_vuelo(Date fecha_vuelo) {
+    public void setFechaVuelo(Date fecha_vuelo) {
         this.fechaVuelo = fecha_vuelo;
     }
 

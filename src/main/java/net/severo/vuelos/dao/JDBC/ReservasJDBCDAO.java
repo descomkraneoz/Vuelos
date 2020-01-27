@@ -78,9 +78,9 @@ public class ReservasJDBCDAO implements IReservaDAO {
                 //apellidos
                 ps.setString(4, p.getApellidos());
                 //fecha
-                ps.setDate(5, new java.sql.Date(p.getFecha_nacimiento().getTime()));
+                ps.setDate(5, new java.sql.Date(p.getFechaNacimiento().getTime()));
                 //maletas
-                ps.setInt(6, p.getNum_maletas_facturar());
+                ps.setInt(6, p.getNumMaletasFacturar());
 
                 if (p instanceof Adulto) {
                     ps.setObject(11, ((Adulto) p).getDescuento());
@@ -108,7 +108,7 @@ public class ReservasJDBCDAO implements IReservaDAO {
                     //destino
                     ps.setString(4, tarjeta.getDestino());
                     //fecha
-                    ps.setDate(5, new java.sql.Date(tarjeta.getFecha_vuelo().getTime()));
+                    ps.setDate(5, new java.sql.Date(tarjeta.getFechaVuelo().getTime()));
                     //terminal
                     ps.setInt(6, tarjeta.getTerminal());
                     //puerta
@@ -522,6 +522,21 @@ public class ReservasJDBCDAO implements IReservaDAO {
         }
     }
 
+    @Override
+    public void finalizar() throws DAOException {
+
+    }
+
+    @Override
+    public void iniciarTransaccion() throws DAOException {
+
+    }
+
+    @Override
+    public void finalizarTransaccion() throws DAOException {
+
+    }
+
     private void obtenerPasajeros(Reserva e) {
         e.getPasajeros();
 
@@ -569,8 +584,8 @@ public class ReservasJDBCDAO implements IReservaDAO {
             p.setDni(dni);
             p.setNombre(nombre);
             p.setApellidos(apellidos);
-            p.setFecha_nacimiento(fecha);
-            p.setNum_maletas_facturar(numMaletas);
+            p.setFechaNacimiento(fecha);
+            p.setNumMaletasFacturar(numMaletas);
             p.setTipo(tipo);
             p.setSolo(solo);
             p.setSilleta(silleta);

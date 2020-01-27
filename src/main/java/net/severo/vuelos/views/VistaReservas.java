@@ -5,18 +5,14 @@
  */
 package net.severo.vuelos.views;
 
+import net.severo.vuelos.estructura.*;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import net.severo.vuelos.estructura.Adulto;
-import net.severo.vuelos.estructura.Ninyo;
-import net.severo.vuelos.estructura.OrdenPago;
-import net.severo.vuelos.estructura.Pasajero;
-import net.severo.vuelos.estructura.Reserva;
-import net.severo.vuelos.estructura.TarjetaEmbarque;
 
 /**
  *
@@ -287,14 +283,14 @@ public class VistaReservas {
                 ninyos.add((Ninyo) p);
             }
         }
-        //p.getId() + "#" + p.getDni() + "#"+ p.getNombre() + "#" + p.getApellidos() + "#"+ fechaPasajero + "#" + p.getNum_maletas_facturar();
+        //p.getId() + "#" + p.getDni() + "#"+ p.getNombre() + "#" + p.getApellidos() + "#"+ fechaPasajero + "#" + p.getNumMaletasFacturar();
         if (!(adultos.isEmpty())) {
             System.out.println("-----------------Adultos---------------");
             System.out.println("ID      DNI         NOMBRE_COMPLETO    FECHA_NACIMIENTO   N_MALETAS   DESCUENTOS");
             for (Pasajero p : adultos) {
-                fechaStr = sdf.format(p.getFecha_nacimiento());
+                fechaStr = sdf.format(p.getFechaNacimiento());
                 // ((Adulto) p).getDescuento();
-                System.out.printf("%-7d %-10s %-20s %-20s %-5d %10s  \n", p.getId(), p.getDni(), p.getNombre() + " " + p.getApellidos(), fechaStr, p.getNum_maletas_facturar(), ((Adulto) p).getDescuento().toString());
+                System.out.printf("%-7d %-10s %-20s %-20s %-5d %10s  \n", p.getId(), p.getDni(), p.getNombre() + " " + p.getApellidos(), fechaStr, p.getNumMaletasFacturar(), ((Adulto) p).getDescuento().toString());
                 
             }
         }
@@ -302,9 +298,9 @@ public class VistaReservas {
             System.out.println("-----------------Niños---------------");
             System.out.println("ID      DNI         NOMBRE_COMPLETO    FECHA_NACIMIENTO   N_MALETAS       SOLO    SILLETA");
             for (Pasajero p : ninyos) {
-                fechaStr = sdf.format(p.getFecha_nacimiento());
+                fechaStr = sdf.format(p.getFechaNacimiento());
                 // p).getSolo() + "#" + ((Ninyo) p).getSilleta();
-                System.out.printf("%-7d %-10s %-20s %-20s %-5d %10s %10s  \n", p.getId(), p.getDni(), p.getNombre() + " " + p.getApellidos(), fechaStr, p.getNum_maletas_facturar(), ((Ninyo) p).getSolo() ? "Sí" : "No", ((Ninyo) p).getSilleta() ? "Sí" : "No");
+                System.out.printf("%-7d %-10s %-20s %-20s %-5d %10s %10s  \n", p.getId(), p.getDni(), p.getNombre() + " " + p.getApellidos(), fechaStr, p.getNumMaletasFacturar(), ((Ninyo) p).getSolo() ? "Sí" : "No", ((Ninyo) p).getSilleta() ? "Sí" : "No");
 
             }
         }
@@ -330,7 +326,7 @@ public class VistaReservas {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String fechaStr;
         for (TarjetaEmbarque t : tarjetasEmbarque) {
-            fechaStr = sdf.format(t.getFecha_vuelo());
+            fechaStr = sdf.format(t.getFechaVuelo());
             System.out.printf("%-7d %-16s %-13s %-15s %-21s %-10d %6d  \n", t.getId(),t.getVuelo(),t.getOrigen(),t.getDestino(),fechaStr,t.getTerminal(),t.getPuerta());
         }
     }

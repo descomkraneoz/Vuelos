@@ -22,7 +22,7 @@ public class Adulto extends Pasajero{
     public void setDescuento(Descuentos descuento) {
         this.descuento = descuento;
     }
-    
-    
+
+
 }
 

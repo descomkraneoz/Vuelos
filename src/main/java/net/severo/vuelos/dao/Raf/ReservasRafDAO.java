@@ -6,16 +6,19 @@
 
 package net.severo.vuelos.dao.Raf;
 
-import java.io.*;
+import net.severo.vuelos.dao.DAOException;
+import net.severo.vuelos.dao.IReservaDAO;
+import net.severo.vuelos.estructura.*;
+
+import java.io.EOFException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import net.severo.vuelos.dao.DAOException;
-import net.severo.vuelos.dao.IReservaDAO;
-import net.severo.vuelos.estructura.*;
 
 /**
  * @author
@@ -127,11 +130,11 @@ public class ReservasRafDAO implements IReservaDAO {
                 buffer.setLength(SIZE_APELLIDO_PASAJERO / 2);
                 rafPasajeros.writeChars(buffer.toString());
                 //fecha
-                buffer = new StringBuffer(sdf.format(p.getFecha_nacimiento()));
+                buffer = new StringBuffer(sdf.format(p.getFechaNacimiento()));
                 buffer.setLength(SIZE_FECHA_PASAJERO / 2);
                 rafPasajeros.writeChars(buffer.toString());
                 //maletas
-                rafPasajeros.writeInt(p.getNum_maletas_facturar());
+                rafPasajeros.writeInt(p.getNumMaletasFacturar());
                 if (p instanceof Adulto) {
                     buffer = new StringBuffer(((Adulto) p).getDescuento().toString());
                 } else {
@@ -492,5 +495,20 @@ public class ReservasRafDAO implements IReservaDAO {
             }
         }
         return reservas;
+    }
+
+    @Override
+    public void finalizar() throws DAOException {
+
+    }
+
+    @Override
+    public void iniciarTransaccion() throws DAOException {
+
+    }
+
+    @Override
+    public void finalizarTransaccion() throws DAOException {
+
     }
 }

@@ -18,7 +18,7 @@ public class Pasajero {
     protected String tipo;
     protected boolean solo;
     protected boolean silleta;
-    protected String descuento;
+    protected Descuentos descuento;
     protected TarjetaEmbarque tarjeta;
 
     Pasajero(int id, String dni, String nombre, String apellidos, Date fecha_nacimiento, int num_maletas_facturar) {
@@ -44,7 +44,7 @@ public class Pasajero {
         this.tipo = tipo;
     }
 
-    public boolean isSolo() {
+    public boolean getSolo() {
         return solo;
     }
 
@@ -52,7 +52,7 @@ public class Pasajero {
         this.solo = solo;
     }
 
-    public boolean isSilleta() {
+    public boolean getSilleta() {
         return silleta;
     }
 
@@ -93,19 +93,19 @@ public class Pasajero {
         this.apellidos = apellidos;
     }
 
-    public Date getFecha_nacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
+    public void setFechaNacimiento(Date fecha_nacimiento) {
         this.fechaNacimiento = fecha_nacimiento;
     }
 
-    public int getNum_maletas_facturar() {
+    public int getNumMaletasFacturar() {
         return numMaletasFacturar;
     }
 
-    public void setNum_maletas_facturar(int num_maletas_facturar) {
+    public void setNumMaletasFacturar(int num_maletas_facturar) {
         this.numMaletasFacturar = num_maletas_facturar;
     }
 
@@ -115,6 +115,14 @@ public class Pasajero {
 
     public void setTarjeta(TarjetaEmbarque tarjeta) {
         this.tarjeta = tarjeta;
+    }
+
+    public Descuentos getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Descuentos descuento) {
+        this.descuento = descuento;
     }
 
     @Override

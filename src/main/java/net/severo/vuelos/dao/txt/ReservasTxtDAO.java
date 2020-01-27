@@ -97,6 +97,21 @@ public class ReservasTxtDAO implements IReservaDAO {
         return reservas;
     }
 
+    @Override
+    public void finalizar() throws DAOException {
+
+    }
+
+    @Override
+    public void iniciarTransaccion() throws DAOException {
+
+    }
+
+    @Override
+    public void finalizarTransaccion() throws DAOException {
+
+    }
+
     public void guardarReservasTxt(List<Reserva> reservas) throws DAOException {
         try ( PrintWriter pwR = new PrintWriter(new FileWriter(archivoReservas, false))) {
             try ( PrintWriter pwP = new PrintWriter(new FileWriter(archivoPasajeros, false))) {
@@ -110,10 +125,10 @@ public class ReservasTxtDAO implements IReservaDAO {
                         pwR.println(reserva);
 
                         for (Pasajero p : r.getPasajeros()) {
-                            String fechaPasajero = sdf.format(p.getFecha_nacimiento());
+                            String fechaPasajero = sdf.format(p.getFechaNacimiento());
                             String pasajero = r.getId() + "#" + p.getId() + "#" + p.getDni() + "#"
                                     + p.getNombre() + "#" + p.getApellidos() + "#"
-                                    + fechaPasajero + "#" + p.getNum_maletas_facturar();
+                                    + fechaPasajero + "#" + p.getNumMaletasFacturar();
                             if (p instanceof Ninyo) {
                                 pasajero += "#" + ((Ninyo) p).getSolo() + "#" + ((Ninyo) p).getSilleta();
                             } else {

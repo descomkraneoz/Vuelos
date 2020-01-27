@@ -63,7 +63,10 @@ public class ServicioReserva {
             throw new ServiciosException("La reserva ya existe.");
         }
         ServicioVuelo.getServicio().modificarVueloPlazas(r.getVuelo().getCodigo(), r.getVuelo().getPlazasDisponibles() - r.getPasajeros().size());
+        dao.iniciarTransaccion();
         dao.crearReserva(r);
+        dao.finalizarTransaccion();
+
     }
 
     public List<Reserva> obtenerReservas(String idVuelo) throws DAOException, ServiciosException {
@@ -113,7 +116,9 @@ public class ServicioReserva {
         //Calculo el nuevo importe de la reserva
         r.setImporte(r.calcularImporte());
         //Modifico la reserva
+        dao.iniciarTransaccion();
         dao.modificarReserva(r);
+        dao.finalizarTransaccion();
     }
 
     public void modificarReservaAnyadirPasajero(Reserva r, Pasajero p) throws DAOException, ServiciosException {
@@ -125,7 +130,9 @@ public class ServicioReserva {
         //Calculo el importe de la reserva
         r.setImporte(r.calcularImporte());
         //Guardo la reserva
+        dao.iniciarTransaccion();
         dao.modificarReserva(r);
+        dao.finalizarTransaccion();
     }
 
     public void modificarReservaBorrarPasajero(Reserva r, Pasajero p) throws DAOException, ServiciosException {
@@ -137,7 +144,9 @@ public class ServicioReserva {
         //Calculo el importe de la reserva
         r.setImporte(r.calcularImporte());
         //Guardo la reserva
+        dao.iniciarTransaccion();
         dao.modificarReserva(r);
+        dao.finalizarTransaccion();
     }
 
     public Pasajero obtenerPasajero(Reserva r, Integer id) throws ServiciosException {
@@ -157,7 +166,9 @@ public class ServicioReserva {
         r.setImporte(r.calcularImporte() * -1);
         //Sumo las plazas canceladas al vuelo de la reserva
         ServicioVuelo.getServicio().modificarVueloPlazas(r.getVuelo().getCodigo(), r.getVuelo().getPlazasDisponibles() + r.getPasajeros().size());
+            dao.iniciarTransaccion();
         dao.modificarReserva(r);
+            dao.finalizarTransaccion();
         }else{
             throw new ServiciosException("La reserva no puede ser cancelada,se ha acabado el plazo");
         }
@@ -167,7 +178,9 @@ public class ServicioReserva {
         r.setCancelada(false);
         r.setImporte(r.getImporte()*-1);
         ServicioVuelo.getServicio().modificarVueloPlazas(r.getVuelo().getCodigo(), r.getVuelo().getPlazasDisponibles() - r.getPasajeros().size());
+        dao.iniciarTransaccion();
         dao.modificarReserva(r);
+        dao.finalizarTransaccion();
     }
 
     public void generarTarjetasEmbarque(Reserva r) throws ServiciosException, DAOException {
@@ -182,7 +195,9 @@ public class ServicioReserva {
         this.tieneTarjetaDeEmbarque(r);
         r.generarTarjetas();
         //método para guardar tarjetas de embarque en txt
+        dao.iniciarTransaccion();
         dao.modificarReserva(r);
+        dao.finalizarTransaccion();
 
     }
 
@@ -220,7 +235,9 @@ public class ServicioReserva {
         else if(dao.obtenerOrdenPago(orden.getId())!=null){
             throw new ServiciosException("La id de esta orden de pago coincide con otra");
         }
+        dao.iniciarTransaccion();
         dao.crearOrdenPago(orden);
+        dao.finalizarTransaccion();
         
     }
     public OrdenPago obtenerOrdenPago(Integer idPago) throws DAOException,ServiciosException{
@@ -268,7 +285,9 @@ public class ServicioReserva {
         if(!(dao.obtenerTodasReservas().contains(r))){
             throw new ServiciosException("La reserva no existe");
         }
+        dao.iniciarTransaccion();
         dao.eliminarReserva(r.getId());
+        dao.finalizarTransaccion();
     }
 
     public List<OrdenPago> obtenerOrdenesPago(Integer idReserva) throws DAOException, ServiciosException {

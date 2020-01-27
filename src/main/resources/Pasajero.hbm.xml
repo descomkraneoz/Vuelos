@@ -27,10 +27,10 @@
         </property>
 
         <subclass name="net.severo.vuelos.estructura.Ninyo" discriminator-value="N">
-            <property name="solo" type="java.lang.Boolean">
+            <property name="solo" type="boolean">
                 <column name="SOLO"/>
             </property>
-            <property name="silleta" type="java.lang.Boolean">
+            <property name="silleta" type="boolean">
                 <column name="SILLETA"/>
             </property>
         </subclass>

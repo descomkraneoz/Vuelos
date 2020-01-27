@@ -23,5 +23,11 @@ public interface IReservaDAO {
     List<Reserva> obtenerTodasReservas()throws DAOException ;
     List<Reserva> obtenerTodasReservas(Date d)throws DAOException ;
     List<Reserva> obtenerTodasReservas(String idVuelo)throws DAOException ;
+
+    public void finalizar() throws DAOException; //cortar la conexion
+
+    public void iniciarTransaccion() throws DAOException;
+
+    public void finalizarTransaccion() throws DAOException;
     
 }

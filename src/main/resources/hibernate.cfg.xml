@@ -21,6 +21,10 @@
         <property name="current_session_context_class">thread</property>-->
 
         <mapping resource="Vuelo.hbm.xml"></mapping>
+        <mapping resource="Reserva.hbm.xml"></mapping>
+        <mapping resource="OrdenPago.hbm.xml"></mapping>
+        <mapping resource="Pasajero.hbm.xml"></mapping>
+        <mapping resource="TarjetaEmbarque.hbm.xml"></mapping>
 
 
     </session-factory>

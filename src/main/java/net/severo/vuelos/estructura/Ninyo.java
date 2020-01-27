@@ -35,5 +35,4 @@ public class Ninyo extends Pasajero {
     }
     
     
-    
 }
