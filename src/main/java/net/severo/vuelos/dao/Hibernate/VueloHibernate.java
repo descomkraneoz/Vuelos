@@ -33,15 +33,15 @@ public class VueloHibernate implements IVuelosDAO {
     @Override
     public void modificarVuelo(Vuelo v) throws DAOException {
         try {
-            Vuelo j = this.obtenerVuelo(v.getCodigo());
+            //Vuelo j = this.obtenerVuelo(v.getCodigo());
             Session sesion = SesionHibernate.getInstance().getSesion();
 
             // Iniciamos una transaccion
             //Transaction tx = sesion.beginTransaction();
 
             // Hacemos los cambios
-            sesion.delete(j);
-            crearVuelo(j);
+            sesion.update(v);
+            //crearVuelo(j);
 
             // Cerramos la transaccion
             //tx.commit();

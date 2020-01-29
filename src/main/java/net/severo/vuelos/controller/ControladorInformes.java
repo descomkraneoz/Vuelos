@@ -39,16 +39,7 @@ public class ControladorInformes {
             if (opcion == 0) {
                 return;
             }
-            /*1. Vuelos entre fechas 
-            2. Vuelos sin plazas libres 
-            3. Reservas de un vuelo 
-            4.Ordenes de pago de una reserva 
-            5. Detalle de una reserva. Con todos sus pasajeros 
-            6. Tarjetas de embarque de una reserva. 
-            7. Dinero Ingresado por un vuelo hasta la fecha de hoy. 
-            8. Número  de vuelo junto con plazas libres, número de adultos y número de niños. 
-            9. Número de pasajeros de un vuelo que aun no han impreso su tarjeta de embarque. 
-            10. Número de reservas canceladas de un vuelo.*/
+
 
             switch (opcion) {
                 case 1:

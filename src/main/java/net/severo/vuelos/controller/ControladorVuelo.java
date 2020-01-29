@@ -112,13 +112,13 @@ public class ControladorVuelo {
                         break;
                     case 4:
                         Integer terminal = vv.pedirTerminal();
-                        if (terminal != null) {
+                        if (terminal != 0) {
                             ServicioVuelo.getServicio().modificarVueloTerminal(codigoVuelo, terminal);
                         }
                         break;
                     case 5:
                         Integer puerta = vv.pedirPuerta();
-                        if (puerta != null) {
+                        if (puerta != 0) {
                             ServicioVuelo.getServicio().modificarVueloPuerta(codigoVuelo, puerta);
                         }
                         break;
@@ -192,6 +192,11 @@ public class ControladorVuelo {
 
     private void asignarPuertaYTerminal() {
         try {
+            ServicioReserva.getServicio().iniciarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        try {
             vv.mostrarVuelos(ServicioVuelo.getServicio().obtenerVuelos());
             String codigoVuelo = vv.pedirCodigoVuelo();
             if (codigoVuelo == null) {
@@ -199,17 +204,23 @@ public class ControladorVuelo {
             }
             ServicioVuelo.getServicio().obtenerVuelo(codigoVuelo);
             Integer puerta = vv.pedirPuerta();
-            if (puerta != null) {
+            if (puerta != 0) {
                 ServicioVuelo.getServicio().modificarVueloPuerta(codigoVuelo, puerta);
             }
             Integer terminal = vv.pedirTerminal();
-            if (terminal != null) {
+            if (terminal != 0) {
                 ServicioVuelo.getServicio().modificarVueloTerminal(codigoVuelo, terminal);
             }
         } catch (DAOException dao) {
             vv.mostrarError("Error al intentar obtener los datos: " + dao.getMessage());
         } catch (ServiciosException se) {
             vv.mostrarError("Error al modificar un vuelo: " + se.getMessage());
+        }
+
+        try {
+            ServicioReserva.getServicio().finalizarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
         }
     }
 
