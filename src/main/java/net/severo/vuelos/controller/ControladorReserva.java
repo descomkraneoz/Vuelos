@@ -39,13 +39,7 @@ public class ControladorReserva {
             if (opcion == 0) {
                 return;
             }
-            /*"  1. Nuevo Reserva. \n"
-                + "2.Ver Reserva \n "
-                + "3.Ver reserva de un vuelo. \n "
-                + "4.Modificar Reserva. \n "
-                + "5.Generar tarjetas de embarque de una reserva. \n "
-                + "6.Cancelar Reserva. \n"
-                + "0)Salir \n "*/
+
             switch (opcion) {
                 case 1:
                     this.nuevaReserva();
@@ -81,7 +75,12 @@ public class ControladorReserva {
     }
 
     public void nuevaReserva() {
-        //int id,Date fecha, boolean cancelada, List<Pasajero> pasajeros, Vuelo vuelo
+        try {
+            ServicioReserva.getServicio().iniciarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+
         //Id de la reserva
         Integer id = vr.pedirIdReserva();
         if (id == null) {
@@ -152,6 +151,8 @@ public class ControladorReserva {
 
         Reserva r = new Reserva(id, fecha, pasajeros, v);
         OrdenPago orden = new OrdenPago(idPago, r.getFecha(), dniPago, tarjetaPago, r.getImporte(), r);
+
+
         try {
             ServicioReserva.getServicio().nuevaReserva(r);
         } catch (DAOException ex) {
@@ -160,15 +161,23 @@ public class ControladorReserva {
         } catch (ServiciosException ex) {
             vr.mostrarError("Error al intentar crear la reserva: " + ex.getMessage());
         }
+
         try {
             ServicioReserva.getServicio().nuevaOrdenPago(orden);
         } catch (DAOException ex) {
             vr.mostrarError("Error al intentar acceder a los datos: " + ex.getMessage());
-            this.eliminarReserva(r);
+            //this.eliminarReserva(r);
         } catch (ServiciosException ex) {
             vr.mostrarError("Error al intentar crear la reserva: " + ex.getMessage());
-            this.eliminarReserva(r);
+            //this.eliminarReserva(r);
         }
+
+        try {
+            ServicioReserva.getServicio().finalizarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -193,6 +202,11 @@ public class ControladorReserva {
     }
 
     private void modificarReserva() {
+        try {
+            ServicioReserva.getServicio().iniciarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
         //codigo vuelo
         //Añadir y quitar pasajeros
 
@@ -325,9 +339,19 @@ public class ControladorReserva {
         } catch (ServiciosException ex) {
             vr.mostrarError("Error con la reserva: " + ex);
         }
+        try {
+            ServicioReserva.getServicio().finalizarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void generarTarjetasEmbarque() {
+        try {
+            ServicioReserva.getServicio().iniciarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
         try {
             vr.mostrarReservas(ServicioReserva.getServicio().obtenerReservas());
             Integer idReserva = vr.pedirIdReserva();
@@ -341,9 +365,19 @@ public class ControladorReserva {
         } catch (ServiciosException ex) {
             vr.mostrarError("Error al intentar obtener los datos: " + ex);
         }
+        try {
+            ServicioReserva.getServicio().finalizarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void cancelarReserva() {
+        try {
+            ServicioReserva.getServicio().iniciarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
         try {
             vr.mostrarReservas(ServicioReserva.getServicio().obtenerReservas());
             Integer idReserva = vr.pedirIdReserva();
@@ -383,15 +417,30 @@ public class ControladorReserva {
         } catch (ServiciosException ex) {
             vr.mostrarError("Error al intentar generar la cancelación de la reserva: " + ex);
         }
+        try {
+            ServicioReserva.getServicio().finalizarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void eliminarReserva(Reserva r) {
+        try {
+            ServicioReserva.getServicio().iniciarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
         try {
             ServicioReserva.getServicio().eliminarReserva(r);
         } catch (DAOException ex) {
             vr.mostrarError("Error al intentar obtener los datos: " + ex);
         } catch (ServiciosException ex) {
             vr.mostrarError("Error al intentar eliminar la reserva: " + ex);
+        }
+        try {
+            ServicioReserva.getServicio().finalizarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -402,6 +451,11 @@ public class ControladorReserva {
             vr.mostrarError("Error al intentar retirar la cancelación de la reserva "+ex);
         } catch (ServiciosException ex) {
             vr.mostrarError("Error al intentar retirar la cancelación de la reserva "+ex);
+        }
+        try {
+            ServicioReserva.getServicio().finalizarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -69,6 +69,11 @@ public class ControladorVuelo {
     }
 
     public void modificarVuelo() {
+        try {
+            ServicioReserva.getServicio().iniciarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
         //Comprobamos que no haya ninguna reserva con tarjeta de embarques que tengan este codigo de vuelo
         try {
             vv.mostrarVuelos(ServicioVuelo.getServicio().obtenerVuelos());
@@ -124,6 +129,11 @@ public class ControladorVuelo {
             vv.mostrarError("Error al intentar obtener los datos: " + dao.getMessage());
         } catch (ServiciosException se) {
             vv.mostrarError("Error al modificar un vuelo: " + se.getMessage());
+        }
+        try {
+            ServicioReserva.getServicio().finalizarTransaccion();
+        } catch (DAOException e) {
+            e.printStackTrace();
         }
     }
 

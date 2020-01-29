@@ -192,4 +192,12 @@ public class ServicioVuelo {
         //ya que los abrimos y cerramos en cada operacion
         dao.finalizar();
     }
+
+    public void iniciarTransaccion() throws DAOException {
+        dao.iniciarTransaccion();
+    }
+
+    public void finalizarTransaccion() throws DAOException {
+        dao.finalizarTransaccion();
+    }
 }

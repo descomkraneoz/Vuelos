@@ -14,7 +14,7 @@
         <property name="show_sql">true</property>
 
         <property name="format_sql">true</property>
-        <property name="hbm2ddl.auto">create</property> <!--cuando tenga las tablas creadas lo cambio a update-->
+        <property name="hbm2ddl.auto">update</property> <!--cuando tenga las tablas creadas lo cambio a update-->
 
         <!-- JDBC connection pool (use the built-in)
         <property name="connection.pool_size">1</property>

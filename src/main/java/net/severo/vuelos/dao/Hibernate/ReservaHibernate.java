@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -220,6 +221,7 @@ public class ReservaHibernate implements IReservaDAO {
 
     @Override
     public List<Reserva> obtenerTodasReservas() throws DAOException {
+
         try {
             Session sesion = SesionHibernate.getInstance().getSesion();
 
@@ -229,11 +231,15 @@ public class ReservaHibernate implements IReservaDAO {
             // Hacemos la consulta
             Query q = sesion.createQuery("from Reserva");
             lista = q.list();
-            for (Reserva j : lista) {
-                Hibernate.initialize(j.getId());
-                //¿Por qué hacemos esto? Es un poco mas complejo de entender
-                // y lo explicaremos en clase
+            if (lista == null) {
+                lista = new ArrayList<>();
+            } else {
+                for (Reserva j : lista) {
+                    Hibernate.initialize(j.getId());
+                }
+
             }
+
 
             // Cerramos la sesión
             //sesion.close();

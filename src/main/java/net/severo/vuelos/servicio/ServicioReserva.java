@@ -6,6 +6,7 @@
 package net.severo.vuelos.servicio;
 
 import net.severo.vuelos.dao.DAOException;
+import net.severo.vuelos.dao.Hibernate.ReservaHibernate;
 import net.severo.vuelos.dao.IReservaDAO;
 import net.severo.vuelos.dao.JDBC.ReservasJDBCDAO;
 import net.severo.vuelos.dao.Raf.ReservasRafDAO;
@@ -45,7 +46,7 @@ public class ServicioReserva {
         }
         if (opcion == 4) {
 
-            //No implentado
+            dao = new ReservaHibernate();
         }
         if (opcion == 5) {
 
@@ -65,7 +66,7 @@ public class ServicioReserva {
         ServicioVuelo.getServicio().modificarVueloPlazas(r.getVuelo().getCodigo(), r.getVuelo().getPlazasDisponibles() - r.getPasajeros().size());
         dao.iniciarTransaccion();
         dao.crearReserva(r);
-        dao.finalizarTransaccion();
+        //dao.finalizarTransaccion();
 
     }
 
@@ -118,7 +119,7 @@ public class ServicioReserva {
         //Modifico la reserva
         dao.iniciarTransaccion();
         dao.modificarReserva(r);
-        dao.finalizarTransaccion();
+        //dao.finalizarTransaccion();
     }
 
     public void modificarReservaAnyadirPasajero(Reserva r, Pasajero p) throws DAOException, ServiciosException {
@@ -132,7 +133,7 @@ public class ServicioReserva {
         //Guardo la reserva
         dao.iniciarTransaccion();
         dao.modificarReserva(r);
-        dao.finalizarTransaccion();
+        //dao.finalizarTransaccion();
     }
 
     public void modificarReservaBorrarPasajero(Reserva r, Pasajero p) throws DAOException, ServiciosException {
@@ -146,7 +147,7 @@ public class ServicioReserva {
         //Guardo la reserva
         dao.iniciarTransaccion();
         dao.modificarReserva(r);
-        dao.finalizarTransaccion();
+        //dao.finalizarTransaccion();
     }
 
     public Pasajero obtenerPasajero(Reserva r, Integer id) throws ServiciosException {
@@ -237,7 +238,7 @@ public class ServicioReserva {
         }
         dao.iniciarTransaccion();
         dao.crearOrdenPago(orden);
-        dao.finalizarTransaccion();
+        //dao.finalizarTransaccion();
         
     }
     public OrdenPago obtenerOrdenPago(Integer idPago) throws DAOException,ServiciosException{
@@ -264,9 +265,10 @@ public class ServicioReserva {
     }
 
     public ArrayList<Pasajero> obtenerTodosLosPasajeros() throws DAOException, ServiciosException {
-
+        //dao.iniciarTransaccion();
         List<Reserva> reservas = dao.obtenerTodasReservas();
         ArrayList<Pasajero> totalPasajeros=new ArrayList<>();
+        //dao.finalizarTransaccion();
         for(Reserva r:reservas){
             for(Pasajero p:r.getPasajeros()){
                 totalPasajeros.add(p);
@@ -370,6 +372,14 @@ public class ServicioReserva {
             }
         }
         return reservas;
+    }
+
+    public void iniciarTransaccion() throws DAOException {
+        dao.iniciarTransaccion();
+    }
+
+    public void finalizarTransaccion() throws DAOException {
+        dao.finalizarTransaccion();
     }
 
     
