@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author Usuario
+ * @author
  */
 public interface IVuelosDAO {
     void crearVuelo (Vuelo vuelo)  throws DAOException ;

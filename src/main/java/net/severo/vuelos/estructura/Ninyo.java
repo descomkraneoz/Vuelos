@@ -18,6 +18,10 @@ public class Ninyo extends Pasajero {
         this.silleta = silleta;
     }
 
+    public Ninyo() {
+
+    }
+
     public boolean getSolo() {
         return solo;
     }

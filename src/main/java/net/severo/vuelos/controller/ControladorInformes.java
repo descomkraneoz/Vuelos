@@ -5,7 +5,6 @@
  */
 package net.severo.vuelos.controller;
 
-import java.util.Date;
 import net.severo.vuelos.dao.DAOException;
 import net.severo.vuelos.estructura.Vuelo;
 import net.severo.vuelos.servicio.ServicioReserva;
@@ -15,9 +14,11 @@ import net.severo.vuelos.views.VistaInformes;
 import net.severo.vuelos.views.VistaReservas;
 import net.severo.vuelos.views.VistaVuelo;
 
+import java.util.Date;
+
 /**
  *
- * @author Rubén Más Almira
+ *
  */
 public class ControladorInformes {
 
