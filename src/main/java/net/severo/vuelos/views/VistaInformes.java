@@ -5,12 +5,11 @@
  */
 package net.severo.vuelos.views;
 
-import java.util.Date;
 import java.util.Scanner;
 
 /**
  *
- * @author Rubén Más Almira
+ * @author
  */
 public class VistaInformes {
 
